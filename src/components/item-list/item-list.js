@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import "./item-list.css";
 import SwapiService from "../../services/swapi-service";
-import Spinner from "../spinner";
+import Spinner from "../spinner/spinner";
 
 export default class ItemList extends Component {
   swapiService = new SwapiService();
@@ -11,13 +11,13 @@ export default class ItemList extends Component {
     peopleList: null
   };
 
-  async componentDidMount() {
-    const peopleList = await this.swapiService.getAllPeople();
-
-    this.setState({ peopleList });
+  componentDidMount() {
+    this.swapiService.getAllPeople().then(peopleList => {
+      this.setState({
+        peopleList
+      });
+    });
   }
-
-  propsOnItemSelected = id => {};
 
   renderItems(arr) {
     return arr.map(({ id, name }) => {
