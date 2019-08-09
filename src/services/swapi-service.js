@@ -1,7 +1,8 @@
 class SwapiService {
   _apiBase = "https://swapi.co/api/";
+  _imageBase = "https://starwars-visualguide.com/assets/img/";
 
-  async getResponse(url) {
+  getResponse = async url => {
     const res = await fetch(`${this._apiBase}${url}`);
 
     if (!res.ok) {
@@ -9,42 +10,56 @@ class SwapiService {
     }
 
     return await res.json();
-  }
+  };
 
-  async getAllPeople() {
+  getAllPeople = async () => {
     const res = await this.getResponse(`people/`);
+    console.log("res", res);
     return res.results.map(this._transformPerson);
-  }
+  };
 
-  async getPerson(id) {
-    const person = this.getResponse(`people/${id}`);
+  getPerson = async id => {
+    const person = await this.getResponse(`people/${id}`);
     return this._transformPerson(person);
-  }
+  };
 
-  async getAllPlanets() {
+  getAllPlanets = async () => {
     const res = await this.getResponse(`planets/`);
+    console.log("res", res);
     return res.results.map(this._transformPlanet);
-  }
+  };
 
-  async getPlanet(id) {
+  getPlanet = async id => {
     const planet = await this.getResponse(`planets/${id}`);
     return this._transformPlanet(planet);
-  }
+  };
 
-  async getAllStarships() {
+  getAllStarships = async () => {
     const res = await this.getResponse(`starships/`);
     return res.results.map(this._transformStarship);
-  }
+  };
 
-  async getStarship(id) {
-    const starship = this.getResponse(`starships/${id}`);
+  getStarship = async id => {
+    const starship = await this.getResponse(`starships/${id}`);
     return this._transformStarship(starship);
-  }
+  };
 
-  _extractId(item) {
+  getPersonImage = ({ id }) => {
+    return `${this._imageBase}characters/${id}.jpg`;
+  };
+
+  getStarshipImage = ({ id }) => {
+    return `${this._imageBase}starships/${id}.jpg`;
+  };
+
+  getPlanetImage = ({ id }) => {
+    return `${this._imageBase}planets/${id}.jpg`;
+  };
+
+  _extractId = item => {
     const idRegExp = /\/([0-9]*)\/$/;
     return item.url.match(idRegExp)[1];
-  }
+  };
 
   _transformStarship = starship => {
     return {
