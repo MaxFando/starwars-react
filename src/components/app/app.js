@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 
 import Header from "../header";
 import SwapiService from "../../services/swapi-service";
@@ -15,85 +15,58 @@ import { SwapiServiceProvider } from "../swapi-service-context";
 
 import "./app.css";
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-export default class App extends Component {
-  swapiService = new SwapiService();
+const App = () => {
+  const swapiService = new SwapiService();
 
-  state = {
-    hasError: false,
-    isLoggedIn: false
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const onLogin = () => {
+    setIsLoggedIn(true);
   };
 
-  onLogin = () => {
-    this.setState({
-      isLoggedIn: true
-    });
-  };
+  return (
+    <SwapiServiceProvider value={this.swapiService}>
+      <ErrorBoundry>
+        <Router>
+          <div className="stardb-app">
+            <Header isLoggedIn={isLoggedIn} />
+            <RandomPlanet />
+            <Switch>
+              <Route exact path="/" render={() => <h2>Welcome to StarDB</h2>} />
 
-  toggleRandomPlanet = () => {
-    this.setState(state => {
-      return {
-        showRandomPlanet: !state.showRandomPlanet
-      };
-    });
-  };
+              <Route path="/people/:id?" component={PeoplePage} />
 
-  componentDidCatch() {
-    this.setState({ hasError: true });
-  }
+              <Route exact path="/planets" render={() => <h2>Planets</h2>} />
+              <Route path="/planets/:id?" component={PlanetPage} />
 
-  render() {
-    const { isLoggedIn } = this.state;
-    return (
-      <SwapiServiceProvider value={this.swapiService}>
-        <ErrorBoundry>
-          <Router>
-            <div className="stardb-app">
-              <Header isLoggedIn={isLoggedIn} />
-              <RandomPlanet />
-              <Switch>
-                <Route
-                  exact
-                  path="/"
-                  render={() => <h2>Welcome to StarDB</h2>}
-                />
+              <Route
+                exact
+                path="/starships"
+                render={() => <h2>Starships</h2>}
+              />
+              <Route path="/starships/:id?" component={StarshipPage} />
 
-                <Route path="/people/:id?" component={PeoplePage} />
+              <Route
+                path="/login"
+                render={() => (
+                  <LoginPage isLoggedIn={isLoggedIn} onLogin={onLogin} />
+                )}
+              />
 
-                <Route exact path="/planets" render={() => <h2>Planets</h2>} />
-                <Route path="/planets/:id?" component={PlanetPage} />
+              <Route
+                path="/secret"
+                render={() => <SecretPage isLoggedIn={isLoggedIn} />}
+              />
 
-                <Route
-                  exact
-                  path="/starships"
-                  render={() => <h2>Starships</h2>}
-                />
-                <Route path="/starships/:id?" component={StarshipPage} />
+              <Route render={() => <h2>Page not found</h2>} />
+            </Switch>
+          </div>
+        </Router>
+      </ErrorBoundry>
+    </SwapiServiceProvider>
+  );
+};
 
-                <Route
-                  path="/login"
-                  render={() => (
-                    <LoginPage isLoggedIn={isLoggedIn} onLogin={this.onLogin} />
-                  )}
-                />
-
-                <Route
-                  path="/secret"
-                  render={() => <SecretPage isLoggedIn={isLoggedIn} />}
-                />
-
-                <Route render={() => <h2>Page not found</h2>} />
-              </Switch>
-            </div>
-          </Router>
-        </ErrorBoundry>
-      </SwapiServiceProvider>
-    );
-  }
-}
+export default App;
