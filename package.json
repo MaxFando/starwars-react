@@ -6,6 +6,7 @@
   "main": "src/index.js",
   "dependencies": {
     "eslint-plugin-react-hooks": "^1.7.0",
+    "prop-types": "^15.7.2",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-scripts": "3.0.1"
