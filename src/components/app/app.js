@@ -27,7 +27,7 @@ const App = () => {
   };
 
   return (
-    <SwapiServiceProvider value={this.swapiService}>
+    <SwapiServiceProvider value={swapiService}>
       <ErrorBoundry>
         <Router>
           <div className="stardb-app">
@@ -37,15 +37,7 @@ const App = () => {
               <Route exact path="/" render={() => <h2>Welcome to StarDB</h2>} />
 
               <Route path="/people/:id?" component={PeoplePage} />
-
-              <Route exact path="/planets" render={() => <h2>Planets</h2>} />
               <Route path="/planets/:id?" component={PlanetPage} />
-
-              <Route
-                exact
-                path="/starships"
-                render={() => <h2>Starships</h2>}
-              />
               <Route path="/starships/:id?" component={StarshipPage} />
 
               <Route

@@ -9,7 +9,7 @@ import "./random-planet.css";
 
 const RandomPlanet = props => {
   const swapiService = new SwapiService();
-  const interval = null;
+  let interval = null;
 
   const [planet, setPlanet] = useState({});
   const [loading, setLoading] = useState(true);
@@ -97,3 +97,5 @@ const PlanetView = ({ planet }) => {
     </React.Fragment>
   );
 };
+
+export default RandomPlanet;

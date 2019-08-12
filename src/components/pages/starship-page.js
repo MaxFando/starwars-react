@@ -6,10 +6,13 @@ import Row from "../row";
 const StarshipPage = ({ history, match }) => {
   const { id } = match.params;
   return (
-    <Row
-      left={<StarshipList onItemSelected={id => history.push(id)} />}
-      right={<StarshipDetails itemId={id} />}
-    />
+    <div>
+      <h2>Starships</h2>
+      <Row
+        left={<StarshipList onItemSelected={id => history.push(id)} />}
+        right={<StarshipDetails itemId={id} />}
+      />
+    </div>
   );
 };
 

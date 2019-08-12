@@ -10,10 +10,13 @@ const PlanetPage = () => {
   };
 
   return (
-    <Row
-      left={<PlanetList onItemSelected={onItemSelected} />}
-      right={<PlanetDetails itemId={selectedItem} />}
-    />
+    <div>
+      <h2>Planets</h2>
+      <Row
+        left={<PlanetList onItemSelected={onItemSelected} />}
+        right={<PlanetDetails itemId={selectedItem} />}
+      />
+    </div>
   );
 };
 

@@ -20,7 +20,7 @@ const ItemDetails = props => {
 
   useEffect(() => {
     updateItem();
-  }, [props.itemid]);
+  });
 
   const updateItem = () => {
     const { itemId, getData, getImageUrl } = props;
