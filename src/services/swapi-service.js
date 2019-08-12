@@ -14,7 +14,6 @@ class SwapiService {
 
   getAllPeople = async () => {
     const res = await this.getResponse(`people/`);
-    console.log("res", res);
     return res.results.map(this._transformPerson);
   };
 
@@ -25,7 +24,6 @@ class SwapiService {
 
   getAllPlanets = async () => {
     const res = await this.getResponse(`planets/`);
-    console.log("res", res);
     return res.results.map(this._transformPlanet);
   };
 
@@ -86,8 +84,6 @@ class SwapiService {
   };
 
   _transformPlanet = planet => {
-    const idRegExp = /\/([0-9]*)\/$/;
-    // const id = planet.url.match(idRegExp)[1]
     const id = planet.url
       .split("/")
       .filter(item => item)
